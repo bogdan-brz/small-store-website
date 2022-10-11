@@ -1,0 +1,8 @@
+.carousel {
+    height: 30rem;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}

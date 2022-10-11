@@ -1,0 +1,22 @@
+.cart {
+    padding: 1rem;
+    margin: 1rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgb(82, 82, 82);
+}
+
+.title {
+    margin: 0.8rem 0 2rem 0.3rem;
+    font-weight: 400;
+    font-size: 2rem;
+}
+
+.carousel {
+    width: 100%;
+    display: flex;
+    padding: 1rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: scroll;
+    background-color: rgb(245, 248, 255);
+}
