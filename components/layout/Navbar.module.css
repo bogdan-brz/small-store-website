@@ -1,11 +1,73 @@
 .navbar {
-    background-color: rgb(245, 248, 255);
+    /* background-color: rgb(245, 248, 255); */
     color: rgb(42, 42, 42);
     height: 4rem;
     font-size: 2rem;
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    justify-content: space-between;
+    /* border-bottom: 1px solid black; */
+}
+
+.navgroup {
+    margin: 0 2rem 0 2rem;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid black;
+}
+
+.navItem {
+    margin: 0 1rem 0 1rem;
+}
+
+.iconItem {
+    display: block;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    /* border: 3px solid black; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.icon {
+    font-size: 1.6rem;
+    transition: 0.2s;
+}
+
+.icon:hover {
+    color: grey;
+    cursor: pointer;
+}
+
+.cartIcon {
+    position: relative;
+}
+
+.cartIcon::after {
+    position: absolute;
+    content: "";
+    background-color: red;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    top: 8%;
+    left: 55%;
+}
+
+.cartIcon::before {
+    position: absolute;
+    content: attr(data-tooltip);
+    color: rgb(255, 255, 255);
+    top: 9%;
+    left: 64%;
+    font-size: 0.85rem;
+    font-weight: 600;
+    z-index: 40;
 }

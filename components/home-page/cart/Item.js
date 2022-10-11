@@ -5,21 +5,22 @@ import styles from "./Item.module.css";
 
 const Item = (props) => {
     const ctx = useContext(CartContext);
-    const { productId, name, brand, price, images } = props.item.product;
+    const { productId, name, brand, price, images } = props.item;
     const quantity = props.item.quantity;
-    const focusProduct = () => {
-        ctx.setProductViewed(productId);
-    };
     return (
         <div className={styles.item}>
-            <div onClick={focusProduct} className={styles.image}>
+            <div
+                onClick={() => ctx.setProductViewed(props.item)}
+                className={styles.image}>
                 <Image src={images[0]} layout="fill" />
             </div>
-            <div onClick={focusProduct} className={styles.name}>
+            <div
+                onClick={() => ctx.setProductViewed(props.item)}
+                className={styles.name}>
                 {name}
             </div>
             <div className={styles.price}>
-                {price} <span className={styles.quantity}>x{quantity}</span>
+                ${price} <span className={styles.quantity}>x{quantity}</span>
             </div>
         </div>
     );

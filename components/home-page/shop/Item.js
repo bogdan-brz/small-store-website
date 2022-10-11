@@ -4,23 +4,36 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import CartContext from "../../context/cart-context";
+import AccountContext from "../../context/account-context";
+import { useSession } from "next-auth/react";
 
 const Item = (props) => {
     const { productId, name, brand, price, images } = props.item;
-    const ctx = useContext(CartContext);
-    const showModal = () => {
-        ctx.setModalShown(true);
-        ctx.setProductViewed(productId);
-    };
+    const { data: session } = useSession();
+    const cartCtx = useContext(CartContext);
+    const accCtx = useContext(AccountContext);
     const inCart =
-        ctx.cart.filter((item) => item.productId == productId).length == 1;
+        cartCtx.cart.filter((item) => item.productId == productId).length == 1;
+    const inLiked =
+        accCtx.likedItems.filter((item) => item.productId == productId)
+            .length == 1;
     return (
         <div className={styles.item}>
             <div className={styles.main}>
-                <div className={styles.image} onClick={showModal}>
+                <div
+                    className={styles.image}
+                    onClick={() => {
+                        cartCtx.setModalShown(true);
+                        cartCtx.setProductViewed(props.item);
+                    }}>
                     <Image src={images[0]} layout="fill" />
                 </div>
-                <div onClick={showModal} className={styles.nameAndPrice}>
+                <div
+                    onClick={() => {
+                        cartCtx.setModalShown(true);
+                        cartCtx.setProductViewed(props.item);
+                    }}
+                    className={styles.nameAndPrice}>
                     {name} -{" "}
                     <span className={styles.price}>${price.toFixed(2)}</span>
                 </div>
@@ -31,13 +44,20 @@ const Item = (props) => {
                     className={`${styles.icon} ${inCart ? styles.inCart : ""}`}
                     icon={faCartShopping}
                     onClick={() => {
-                        ctx.toggleInCart(productId);
+                        cartCtx.toggleInCart(props.item);
                     }}
                 />
-                <FontAwesomeIcon
-                    className={styles.icon + " " + styles.heartIcon}
-                    icon={faHeart}
-                />
+                <div className={!session ? styles.mustSignIn : ""}>
+                    <FontAwesomeIcon
+                        className={`${styles.icon} ${styles.heartIcon} ${
+                            inLiked ? styles.inLiked : ""
+                        }`}
+                        icon={faHeart}
+                        onClick={() => {
+                            if (session) accCtx.toggleInLikedItems(props.item);
+                        }}
+                    />
+                </div>
             </div>
         </div>
     );

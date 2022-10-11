@@ -5,8 +5,10 @@ import CartContext from "../components/context/cart-context";
 import Modal from "../components/layout/Modal";
 import ProductDetails from "../components/home-page/cart/ProductDetails";
 import Cart from "../components/home-page/cart/Cart";
+import AccountContext from "../components/context/account-context";
+import Account from "../components/home-page/account/account";
 
-const shop_items = [
+const _shop_items = [
     {
         category: "Watches",
         items: [
@@ -270,64 +272,65 @@ const shop_items = [
     },
 ];
 
-const Home = () => {
-    const ctx = useContext(CartContext);
+const Home = (props) => {
+    const shop_items = props.shop_items;
+    const cartCtx = useContext(CartContext);
+    const accCtx = useContext(AccountContext);
     const [isBrowser, setIsBrowser] = useState(false);
     useEffect(() => {
         setIsBrowser(true);
     }, []);
     if (isBrowser) {
-        if (ctx.modalShown) {
+        if (cartCtx.modalShown || accCtx.modalShown) {
             document.body.classList.add("fixHeight");
         } else {
             document.body.classList.remove("fixHeight");
         }
     }
-    const findProductById = (id) => {
-        let product = null;
-        shop_items.forEach((el) => {
-            el.items.forEach((_item) => {
-                if (_item.productId == id) product = _item;
-            });
-        });
-        return product;
-    };
-
-    let cart = [];
-    ctx.cart.forEach((item) => {
-        cart.push({
-            quantity: item.quantity,
-            product: findProductById(item.productId),
-        });
-    });
-    const productViewed = findProductById(ctx.productViewed);
-    let productViewedQuantity = productViewed
-        ? ctx.cart.filter((item) => item.productId == ctx.productViewed)
-              .length == 1
-            ? ctx.cart.filter((item) => item.productId == ctx.productViewed)[0]
-                  .quantity
+    let productViewedQuantity = cartCtx.productViewed
+        ? cartCtx.cart.filter(
+              (item) => item.productId == cartCtx.productViewed.productId
+          ).length == 1
+            ? cartCtx.cart.filter(
+                  (item) => item.productId == cartCtx.productViewed.productId
+              )[0].quantity
             : null
         : null;
     return (
         <Fragment>
             <HomePage shop_items={shop_items} />
-            {ctx.modalShown && isBrowser && (
+            {cartCtx.modalShown && isBrowser && (
                 <Modal
                     onClose={() => {
-                        ctx.setModalShown(false);
-                        ctx.setProductViewed(null);
+                        cartCtx.setModalShown(false);
+                        cartCtx.setProductViewed(null);
                     }}>
-                    {productViewed && (
+                    {cartCtx.productViewed && (
                         <ProductDetails
-                            product={productViewed}
+                            product={cartCtx.productViewed}
                             quantity={productViewedQuantity}
                         />
                     )}
-                    <Cart cart={cart} />
+                    <Cart cart={cartCtx.cart} />
+                </Modal>
+            )}
+            {accCtx.modalShown && isBrowser && (
+                <Modal
+                    onClose={() => {
+                        accCtx.setModalShown(false);
+                    }}>
+                    <Account />
                 </Modal>
             )}
         </Fragment>
     );
+};
+
+export const getStaticProps = (context) => {
+    const shop_items = _shop_items; // or api call
+    return {
+        props: { shop_items },
+    };
 };
 
 export default Home;

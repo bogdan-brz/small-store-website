@@ -5,4 +5,5 @@
     display: flex;
     flex-direction: row;
     overflow-x: scroll;
+    margin-bottom: 3rem;
 }

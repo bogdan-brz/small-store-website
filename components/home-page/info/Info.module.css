@@ -1,6 +1,6 @@
 .info {
     background-color: white;
-    margin-top: 5rem;
+    margin-top: 2rem;
     padding: 1.2rem;
     display: flex;
     flex-direction: column;
@@ -20,7 +20,7 @@
 }
 
 .subtitle {
-    margin: 1rem 0 0.4rem 0;
+    margin: 1.6rem 0 0.4rem 0;
     font-weight: 300;
     font-size: 1.2rem;
 }

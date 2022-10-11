@@ -1,14 +1,13 @@
 .cart {
     padding: 1rem;
     margin: 1rem;
-    margin-top: 2rem;
-    border-top: 1px solid rgb(82, 82, 82);
+    margin-top: 1rem;
 }
 
 .title {
     margin: 0.8rem 0 2rem 0.3rem;
-    font-weight: 400;
-    font-size: 2rem;
+    font-weight: 200;
+    font-size: 2.3rem;
 }
 
 .carousel {
@@ -19,4 +18,26 @@
     justify-content: flex-start;
     overflow-x: scroll;
     background-color: rgb(245, 248, 255);
+}
+
+.total {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    font-weight: 200;
+}
+
+.checkoutBtn {
+    background-color: white;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    border: 1px solid black;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin-top: 1rem;
+    transition: 0.2s;
+}
+
+.checkoutBtn:hover {
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    background-color: rgb(41, 41, 41);
 }

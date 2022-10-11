@@ -12,41 +12,52 @@ const CartContext = React.createContext({
 
 const CartContextProvider = (props) => {
     const [cart, setCart] = useState([]);
-    const toggleInCart = (productId) => {
+    const toggleInCart = (item) => {
         setCart((cart) => {
             let _itemInCart = cart.filter(
-                (item) => item.productId == productId
+                (_item) => _item.productId == item.productId
             );
             if (_itemInCart.length > 0) {
-                return cart.filter((item) => item.productId != productId);
+                return cart.filter(
+                    (_item) => _item.productId != item.productId
+                );
             } else {
                 let _cart = cart;
-                _cart.push({ productId, quantity: 1 });
+                _cart.push({ ...item, quantity: 1 });
                 return [..._cart];
             }
         });
         return;
     };
-    const setItemQuantity = (productId, quantity) => {
+    const setItemQuantity = (item, quantity) => {
         setCart((cart) => {
             if (quantity == 0) {
-                return cart.filter((item) => item.productId != productId);
+                return cart.filter(
+                    (_item) => _item.productId != item.productId
+                );
             } else {
                 if (
-                    cart.filter((item) => item.productId == productId).length ==
-                    1
+                    cart.filter((_item) => _item.productId == item.productId)
+                        .length == 1
                 ) {
-                    return cart.map((item) => {
-                        let _quantity = item.quantity;
-                        if (item.productId == productId) _quantity = quantity;
-                        return {
-                            productId: item.productId,
+                    return cart.map((_item) => {
+                        let _quantity = _item.quantity;
+                        if (_item.productId == item.productId)
+                            _quantity = quantity;
+                        const updatedItem = {
+                            ..._item,
                             quantity: _quantity,
                         };
+                        console.log(
+                            "-------------------------------- here ---------------------------------"
+                        );
+                        console.log(updatedItem);
+                        return updatedItem;
                     });
                 } else {
                     let _cart = cart;
-                    _cart.push({ productId, quantity });
+                    const newItem = { ...item, quantity };
+                    _cart.push(newItem);
                     return [..._cart];
                 }
             }
